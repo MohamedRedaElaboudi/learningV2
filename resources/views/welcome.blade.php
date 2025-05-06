@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Edu+ - Apprendre partout, à tout moment</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-800 dark:text-gray-100 transition-colors duration-200">
+
 
   <x-navbar></x-navbar>
 

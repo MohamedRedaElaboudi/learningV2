@@ -1,6 +1,6 @@
 <x-navbar></x-navbar>
 
-<div class="min-h-screen bg-blue-50 flex items-center justify-center px-4 py-8">
+<div class="min-h-screen bg-blue-100 flex items-center justify-center px-4 py-8">
     <div class="w-full max-w-md bg-white rounded-lg shadow dark:bg-gray-800 dark:border dark:border-gray-700">
         <a href="#" class="flex justify-center mt-6 text-2xl font-semibold text-gray-900 dark:text-white">
             Edu<span class="text-blue-600">Plus</span>

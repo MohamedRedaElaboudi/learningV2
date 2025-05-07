@@ -19,7 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('Acceuil');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.show');
-Route::get('/cours', [CoursController::class, 'show'])->name('cours.show');
+Route::get('/cours', [CoursController::class, 'mescours'])->name('cours.mescours');
+
 
 Route::post('/login', [LoginController::class, 'login'])->name('login');
 
@@ -27,5 +28,10 @@ use App\Http\Controllers\RegisterController;
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('showRegistrationForm');
 Route::post('/register', [RegisterController::class, 'register'])->name('register');
+//cours rejoindre 
+Route::get('/rejoindre', [CoursController::class, 'mesCoursInscrits'])->name('cours.rejoindreshow');
+Route::post('/rejoindre', [CoursController::class, 'rejoindre'])->name('cours.rejoindre');
+
+
 
 

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class inscrire extends Pivot
+class Inscrire extends Pivot
 {
     protected $table = 'inscrire';
     public $timestamps = false;

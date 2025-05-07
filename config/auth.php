@@ -60,15 +60,15 @@ return [
     */
 
     'providers' => [
-        //'users' => [
-           // 'driver' => 'eloquent',
-            //'model' => App\Models\User::class,
-        // ],
-
-         'users' => [
-             'driver' => 'database',
-             'table' => 'personnes',
-         ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Personne::class,  // Utiliser le modèle Personne
+        ],
+        // Si tu veux aussi utiliser la base de données, tu peux conserver cette partie :
+        'personnes' => [
+            'driver' => 'database',
+            'table' => 'personnes',
+        ],
     ],
 
     /*

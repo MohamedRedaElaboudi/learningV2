@@ -31,6 +31,7 @@ Route::post('/register', [RegisterController::class, 'register'])->name('registe
 //cours rejoindre 
 Route::get('/rejoindre', [CoursController::class, 'mesCoursInscrits'])->name('cours.rejoindreshow');
 Route::post('/rejoindre', [CoursController::class, 'rejoindre'])->name('cours.rejoindre');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 

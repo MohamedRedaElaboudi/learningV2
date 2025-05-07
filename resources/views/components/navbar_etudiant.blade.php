@@ -43,6 +43,19 @@
         <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
           <i class="fas fa-info-circle mr-2"></i> À propos
         </a>
+
+        <!-- Dropdown pour paramètres et déconnexion -->
+        <div class="relative">
+          <button class="flex items-center space-x-2 hover:text-blue-600 dark:hover:text-blue-400">
+            <span>Mon compte</span>
+            <i class="fas fa-caret-down"></i>
+          </button>
+          <div class="absolute right-0 hidden bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-md shadow-lg mt-2 w-48 z-10">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Mes informations</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Paramètres</a>
+            <a href="{{route('logout')}}" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Déconnexion</a>
+          </div>
+        </div>
       </div>
   
       <!-- Bouton pour basculer entre le mode clair et sombre -->
@@ -106,6 +119,21 @@
 
     // Initialisation
     document.addEventListener('DOMContentLoaded', checkDarkMode);
+
+    // Affichage du dropdown
+    const dropdownButton = document.querySelector('.relative > button');
+    const dropdownMenu = document.querySelector('.relative > div');
+
+    dropdownButton.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Cacher le menu si l'utilisateur clique en dehors
+    window.addEventListener('click', (e) => {
+      if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
   </script>
 
 </body>

@@ -40,4 +40,18 @@ class LoginController extends Controller
             'email' => 'Email ou mot de passe incorrect.',
         ])->withInput();
     }
+    public function logout(Request $request)
+    {
+        // Déconnecter l'utilisateur
+        Auth::logout();
+
+        // Invalider la session pour améliorer la sécurité
+        $request->session()->invalidate();
+
+        // Regénérer le token CSRF pour éviter les attaques CSRF
+        $request->session()->regenerateToken();
+
+        // Rediriger l'utilisateur vers la page de connexion
+        return redirect('/login');
+    }
 }

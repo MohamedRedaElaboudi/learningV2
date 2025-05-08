@@ -8,19 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Ressource extends Model
 {
     use HasFactory;
+    protected $table = 'ressources';
 
     protected $primaryKey = 'id_ressource'; // spécifie la clé primaire personnalisée
 
     protected $fillable = [
         'titre_ressource',
-        'date_publication',
         'emplacement',
         'type',
+        'professeur_id',
+
     ];
 
-    public function professeurs()
+    public function professeur()
     {
-        return $this->belongsToMany(Professeur::class, 'publier', 'id_ressource', 'id_personne');
+        return $this->belongsTo(Professeur::class, 'professeur_id');
     }
     
 

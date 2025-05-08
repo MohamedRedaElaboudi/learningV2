@@ -15,7 +15,11 @@ return new class extends Migration
             $table->unsignedBigInteger('id_personne')->primary();
             $table->text('biographie')->nullable();
             $table->string('photo')->nullable();
+            $table->unsignedBigInteger('id_admin');
+
             $table->foreign('id_personne')->references('id_personne')->on('personnes')->onDelete('cascade');
+
+            $table->foreign('id_admin')->references('id_personne')->on('professeurs')->onDelete('cascade');
         });
     }
 

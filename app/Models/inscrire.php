@@ -2,12 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\Pivot;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-class inscrire extends Pivot
+class Inscrire extends Model
 {
+    use HasFactory;
+
     protected $table = 'inscrire';
-    public $timestamps = false;
+
+    public $incrementing = false;
+
+    protected $primaryKey = ['id_personne', 'id_classe'];
 
     protected $fillable = [
         'id_personne',
@@ -16,7 +22,7 @@ class inscrire extends Pivot
     ];
 
     /**
-     * Relation vers l'étudiant (personne).
+     * Relation avec le modèle Etudiant.
      */
     public function etudiant()
     {
@@ -24,7 +30,7 @@ class inscrire extends Pivot
     }
 
     /**
-     * Relation vers la classe.
+     * Relation avec le modèle Classe.
      */
     public function classe()
     {

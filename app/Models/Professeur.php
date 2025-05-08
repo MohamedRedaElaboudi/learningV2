@@ -16,6 +16,7 @@ class Professeur extends Model
         'id_personne',
         'biographie',
         'photo',
+        'id_admin',
     ];
 
     /**
@@ -25,10 +26,24 @@ class Professeur extends Model
     {
         return $this->belongsTo(Personne::class, 'id_personne');
     }
-    public function ressourcesPubliees()
+
+    
+     /**
+     * Relation avec l'administrateur (autre professeur).
+     */
+    public function administrateur()
     {
-        return $this->belongsToMany(Ressource::class, 'publier', 'id_personne', 'id_ressource');
+        return $this->belongsTo(Professeur::class, 'id_admin');
     }
+
+    /**
+     * Relation avec les professeurs supervisés par cet administrateur.
+     */
+    public function professeursSupervises()
+    {
+        return $this->hasMany(Professeur::class, 'id_admin');
+    }
+
     
 
 }

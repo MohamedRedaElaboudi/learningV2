@@ -16,6 +16,11 @@ return new class extends Migration
             $table->string('classe_nom');
             $table->string('code_classe')->unique();
             $table->timestamps();
+
+            $table->unsignedBigInteger('id_prof');
+            
+        
+            $table->foreign('id_prof')->references('id_personne')->on('professeurs')->onDelete('cascade');
         });
         
     }

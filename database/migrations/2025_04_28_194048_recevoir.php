@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('recevoir', function (Blueprint $table) {
             $table->unsignedBigInteger('id_personne');
-            $table->unsignedBigInteger('id_notification');
+            $table->unsignedBigInteger('id_ressource');
+            $table->string('message');
 
-            $table->primary(['id_personne', 'id_notification']);
+            $table->primary(['id_personne', 'id_ressource']);
 
             $table->foreign('id_personne')
                 ->references('id_personne')
                 ->on('etudiants')
                 ->onDelete('cascade');
 
-            $table->foreign('id_notification')
-                ->references('id_notification')
-                ->on('notifications')
+            $table->foreign('id_ressource')
+                ->references('id_ressource')
+                ->on('ressources')
                 ->onDelete('cascade');
         });
     }

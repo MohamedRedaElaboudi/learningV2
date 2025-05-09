@@ -34,7 +34,7 @@
         <a href="{{ route('Acceuil') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
           <i class="fas fa-home mr-2"></i> Accueil
         </a>
-        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+        <a href="{{route('cours.mescours')}}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
           <i class="fas fa-book mr-2"></i> Mes cours
         </a>
         <a href="{{ route('cours.rejoindreshow') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">

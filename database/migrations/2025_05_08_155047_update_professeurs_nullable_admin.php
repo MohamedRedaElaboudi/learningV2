@@ -11,18 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
-            $table->id('id_notification');
-            $table->text('message');
-            $table->timestamps();
+        Schema::table('professeurs', function (Blueprint $table) {
+            $table->unsignedBigInteger('id_admin')->nullable()->change(); // Rendre id_admin nullable
         });
     }
 
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-        Schema::dropIfExists('notifications');
-    }
+    
 };

@@ -1,52 +1,72 @@
+@php
+    use Illuminate\Support\Arr;
+
+    // Définir les couleurs de fond disponibles
+    $backgroundColors = [
+        'red-100', 'red-200',
+        'orange-100', 'orange-200',
+        'amber-100', 'amber-200',
+        'yellow-100', 'yellow-200',
+        'lime-100', 'lime-200',
+        'green-100', 'green-200',
+        'emerald-100', 'emerald-200',
+        'teal-100', 'teal-200',
+        'cyan-100', 'cyan-200',
+        'sky-100', 'sky-200',
+        'blue-100', 'blue-200',
+        'indigo-100', 'indigo-200',
+        'violet-100', 'violet-200',
+        'purple-100', 'purple-200',
+        'fuchsia-100', 'fuchsia-200',
+        'pink-100', 'pink-200',
+        'rose-100', 'rose-200',
+    ];
+
+    // Définir un tableau limité de 3 couleurs de texte
+    $textColors = [
+        'red-500', 'blue-600', 'gray-800','black','green'
+    ];
+
+    // Mélanger les couleurs pour avoir un ordre aléatoire
+    $shuffledBackgroundColors = collect($backgroundColors)->shuffle()->values();
+    $shuffledTextColors = collect($textColors)->shuffle()->values();
+@endphp
+
 <x-navbar_etudiant></x-navbar_etudiant>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-  <!-- Card 1 - Mathématiques -->
-  <a href="#" class="block cursor-pointer">
-    <div class="bg-white dark:bg-gray-700 rounded-lg border overflow-hidden hover:shadow-md">
-      <div class="relative h-40 bg-blue-50">
-        <div class="absolute inset-0 flex items-center justify-center bg-blue-100">
-          <span class="text-blue-600 font-bold">Mathématiques</span>
-        </div>
-      </div>
-      <div class="p-4">
-        <h3 class="font-bold text-lg">Algèbre Avancée</h3>
-        <p class="bg-white dark:bg-gray-700 text-sm mt-1">Mmme. BENANE</p>
-      </div>
-    </div>
-  </a>
+    @if($classes->isEmpty())
+        <p>Aucune classe inscrite pour le moment.</p>
+    @else
+        @foreach ($classes as $index => $classe)
+            @php
+                // Choisir une couleur de fond et de texte distincte
+                $randomBackgroundColor = $shuffledBackgroundColors[$index % $shuffledBackgroundColors->count()];
+                $randomTextColor = $shuffledTextColors[$index % $shuffledTextColors->count()];
+            @endphp
+            <a href="#" class="block cursor-pointer">
+                <div class="bg-white dark:bg-gray-700 rounded-lg border overflow-hidden hover:shadow-md">
+                    <!-- Appliquer la couleur de fond -->
+                    <div class="relative h-40 bg-{{ $randomBackgroundColor }}">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <!-- Appliquer la couleur de texte distincte -->
+                            <span class="text-{{ $randomTextColor }} font-bold">{{ $classe->classe_nom }}</span>
+                        </div>
+                    </div>
 
-  <!-- Card 2 - Informatique -->
-  <a href="#" class="block cursor-pointer">
-    <div class="bg-white dark:bg-gray-700 rounded-lg border overflow-hidden hover:shadow-md">
-      <div class="relative h-40 bg-green-50">
-        <div class="absolute inset-0 flex items-center justify-center bg-green-100">
-          <span class="text-green-600 font-bold">Informatique</span>
-        </div>
-      </div>
-      <div class="p-4">
-        <h3 class="font-bold text-lg">POO EN JAVA</h3>
-        <p class="bg-white dark:bg-gray-700 text-sm mt-1">M. EL ABOUDI</p>
-      </div>
-    </div>
-  </a>
-
-  <!-- Card 3 - Physique -->
-  <a href="#" class="block cursor-pointer">
-    <div class="bg-white dark:bg-gray-700 rounded-lg border overflow-hidden hover:shadow-md">
-      <div class="relative h-40 bg-red-50">
-        <div class="absolute inset-0 flex items-center justify-center bg-red-100">
-          <span class="text-red-600 font-bold">Physique</span>
-        </div>
-      </div>
-      <div class="p-4">
-        <h3 class="font-bold text-lg">Mécanique Quantique</h3>
-        <p class="bg-white dark:bg-gray-700 text-sm mt-1">Mme. JAOUANE</p>
-      </div>
-    </div>
-  </a>
+                    <div class="p-4">
+                        <h3 class="font-bold text-lg">{{ $classe->classe_nom }}</h3>
+                        <p class="bg-white dark:bg-gray-700 text-sm mt-1">
+                            Professeur : 
+                            @if($classe->professeur)
+                                {{ $classe->professeur->nom }} {{ $classe->professeur->prenom }}
+                            @else
+                                Professeur non attribué
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </a>
+        @endforeach
+    @endif
 </div>
-
-<footer>
-  <x-footer></x-footer>
-</footer>

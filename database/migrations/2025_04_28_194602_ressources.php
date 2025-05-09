@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('ressources', function (Blueprint $table) {
             $table->id('id_ressource');
             $table->string('titre_ressource');
-            $table->date('date_publication');
             $table->string('emplacement');
-            $table->string('type', 100);
+            $table->string('type');
             $table->timestamps();
+            $table->unsignedBigInteger('professeur_id')->nullable();
+            $table->foreign('professeur_id')->references('id_personne')->on('professeurs')->onDelete('cascade');
         });
         
     }

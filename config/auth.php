@@ -27,11 +27,7 @@ return [
     | Of course, a great default configuration has been defined for you
     | here which uses session storage and the Eloquent user provider.
     |
-    | All authentication drivers have a user provider. This defines how the
-    | users are actually retrieved out of your database or other storage
-    | mechanisms used by this application to persist your user's data.
-    |
-    | Supported: "session"
+    | Supported: "session", "token"
     |
     */
 
@@ -39,6 +35,12 @@ return [
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
+        ],
+
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
         ],
     ],
 
@@ -58,14 +60,13 @@ return [
     | Supported: "database", "eloquent"
     |
     */
+'providers' => [
+    'users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Personne::class,
+    ],
 
-    'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Personne::class,  // Utiliser le modèle Personne
-        ],
-        // Si tu veux aussi utiliser la base de données, tu peux conserver cette partie :
-        'personnes' => [
+        'users_database' => [
             'driver' => 'database',
             'table' => 'personnes',
         ],

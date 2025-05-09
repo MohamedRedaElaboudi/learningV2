@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Page d'accueil</title>
+  <title>Edu+ , apprendre partout</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -28,7 +28,7 @@
         <a href="{{ route('Acceuil') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
           <i class="fas fa-home mr-2"></i> Accueil
         </a>
-        <a href="{{ route('cours.mescours') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
           <i class="fas fa-book mr-2"></i> Cours
         </a>
         <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
@@ -50,23 +50,9 @@
   </nav>
 
   <!-- Menu mobile -->
-  <div class="peer-checked:flex hidden flex-col md:hidden px-4 pb-4 text-gray-700 dark:text-gray-200 space-y-2 font-medium">
-    <a href="{{ route('Acceuil') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-      <i class="fas fa-home mr-2"></i> Accueil
-    </a>
-    <a href="{{ route('cours.mescours') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-      <i class="fas fa-book mr-2"></i> Cours
-    </a>
-    <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-      <i class="fas fa-info-circle mr-2"></i> À propos
-    </a>
-    <a href="{{ route('login') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-      <i class="fas fa-sign-in-alt mr-2"></i> Se connecter
-    </a>
-  </div>
+
 
   <script>
-    // Vérifie le mode au chargement
     function checkDarkMode() {
       if (localStorage.getItem('darkMode') === 'true' || 
           (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -77,7 +63,6 @@
       updateDarkModeIcon();
     }
 
-    // Bascule entre dark/light
     function toggleDarkMode() {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('darkMode', isDark);

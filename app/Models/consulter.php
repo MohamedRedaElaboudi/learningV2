@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Consulter extends Model
 {
+    use HasFactory;
+
     protected $table = 'consulter';
-    public $timestamps = false; // Pas de colonnes created_at / updated_at
-    public $incrementing = false; // Clé primaire composée
-    protected $primaryKey = null; // Nécessaire quand on utilise une clé composée
+
+    public $incrementing = false;
+
+    protected $primaryKey = ['id_personne', 'id_ressource'];
 
     protected $fillable = [
         'id_personne',
@@ -17,7 +21,7 @@ class Consulter extends Model
     ];
 
     /**
-     * Relation avec l'étudiant (personne).
+     * Relation avec le modèle Etudiant.
      */
     public function etudiant()
     {
@@ -25,7 +29,7 @@ class Consulter extends Model
     }
 
     /**
-     * Relation avec la ressource.
+     * Relation avec le modèle Ressource.
      */
     public function ressource()
     {

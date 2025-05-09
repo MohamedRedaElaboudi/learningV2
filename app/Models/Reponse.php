@@ -5,20 +5,39 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Question extends Model
+class Reponse extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_question'; // Clé primaire personnalisée
+    protected $table = 'reponses';
+
+    protected $primaryKey = 'id_reponse';
 
     protected $fillable = [
-        'question',
-        'date_question',
+        'reponse',
+        'id_question',
+        'id_reply',
     ];
 
-    public function etudiants()
+    public function question()
     {
-        return $this->belongsToMany(Etudiant::class, 'repondre', 'id_reponse', 'id_personne');
+        return $this->belongsTo(Question::class, 'id_question');
+    }
+
+    /**
+     * Relation avec la réponse parent (si c'est une sous-réponse).
+     */
+    public function parentReponse()
+    {
+        return $this->belongsTo(Reponse::class, 'id_reply');
+    }
+
+    /**
+     * Relation avec les sous-réponses (réponses liées).
+     */
+    public function sousReponses()
+    {
+        return $this->hasMany(Reponse::class, 'id_reply');
     }
     
 

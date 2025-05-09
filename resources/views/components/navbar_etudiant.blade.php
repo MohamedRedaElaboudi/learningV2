@@ -15,85 +15,74 @@
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans dark:bg-gray-800 dark:text-gray-100">
 
-  <!-- Navbar Étudiant Authentifié -->
-  <header class="bg-white dark:bg-gray-900 shadow-md">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-      <div class="flex items-center space-x-4">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Edu<span class="text-indigo-600 dark:text-indigo-400">+</span></h1>
-        <nav class="hidden md:flex space-x-6 text-gray-900 dark:text-white font-medium">
-          <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-            <i class="fas fa-home mr-2"></i> Accueil
-          </a>
-          <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-            <i class="fas fa-book mr-2"></i> Mes cours
-          </a>
-          <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-            <i class="fas fa-plus-circle mr-2"></i> Rejoindre un cours
-          </a>
-          <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
-            <i class="fas fa-info-circle mr-2"></i> À propos
-          </a>
-        </nav>
-      </div>
-      
-      <div class="flex items-center space-x-6">
-        <!-- Dark Mode Toggle -->
-        <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path id="sun-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-            <path id="moon-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-          </svg>
-        </button>
-        
-        <!-- Menu Profil -->
-        <div class="relative" x-data="{ open: false }">
-          <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-            <div class="h-10 w-10 rounded-full bg-indigo-100 dark:bg-indigo-900 flex items-center justify-center">
-              <span class="text-indigo-700 dark:text-indigo-300 font-medium">JP</span>
-            </div>
-            <span class="hidden md:inline text-gray-700 dark:text-gray-300">Jean P.</span>
+  <!-- Navbar -->
+  <nav class="bg-white dark:bg-gray-900 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <!-- Logo -->
+      <a href="{{route('Acceuil')}}" class="text-2xl font-bold text-gray-900 dark:text-white">
+        Edu<span class="text-indigo-600 dark:text-indigo-400">+</span>
+      </a>
+  
+      <!-- Bouton menu mobile -->
+      <input type="checkbox" id="menu-toggle" class="peer hidden" />
+      <label for="menu-toggle" class="md:hidden cursor-pointer text-gray-700 dark:text-gray-200">
+        <i class="fas fa-bars fa-lg"></i>
+      </label>
+  
+      <!-- Menu -->
+      <div class="hidden md:flex space-x-6 text-gray-900 dark:text-white font-medium">
+        <a href="{{ route('Acceuil') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+          <i class="fas fa-home mr-2"></i> Accueil
+        </a>
+        <a href="{{route('cours.mescours')}}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+          <i class="fas fa-book mr-2"></i> Mes cours
+        </a>
+        <a href="{{ route('cours.rejoindreshow') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+          <i class="fas fa-plus-circle mr-2"></i> Rejoindre un cours
+        </a>
+        <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+          <i class="fas fa-info-circle mr-2"></i> À propos
+        </a>
+
+        <!-- Dropdown pour paramètres et déconnexion -->
+        <div class="relative">
+          <button class="flex items-center space-x-2 hover:text-blue-600 dark:hover:text-blue-400">
+            <span>Mon compte</span>
+            <i class="fas fa-caret-down"></i>
           </button>
-          
-          <!-- Dropdown Menu -->
-          <div x-show="open" @click.away="open = false" 
-               class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg py-1 z-50 border border-gray-200 dark:border-gray-700">
-            <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <i class="fas fa-user mr-2"></i> Mon profil
-            </a>
-            <a href="#" class="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <i class="fas fa-cog mr-2"></i> Paramètres
-            </a>
-            <div class="border-t border-gray-200 dark:border-gray-700 my-1"></div>
-            <a href="#" class="block px-4 py-2 text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
-              <i class="fas fa-sign-out-alt mr-2"></i> Déconnexion
-            </a>
+          <div class="absolute right-0 hidden bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-100 rounded-md shadow-lg mt-2 w-48 z-10">
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Mes informations</a>
+            <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Paramètres</a>
+            <a href="{{route('logout')}}" class="block px-4 py-2 text-sm hover:bg-gray-200 dark:hover:bg-gray-600">Déconnexion</a>
           </div>
         </div>
       </div>
+  
+      <!-- Bouton pour basculer entre le mode clair et sombre -->
+      <button onclick="toggleDarkMode()" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-700 dark:text-yellow-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path id="sun-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+          <path id="moon-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
     </div>
-    
-    <!-- Menu Mobile -->
-    <div class="md:hidden bg-gray-100 dark:bg-gray-800 px-6 py-2">
-      <div class="flex justify-around">
-        <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex flex-col items-center">
-          <i class="fas fa-home mb-1"></i>
-          <span class="text-xs">Accueil</span>
-        </a>
-        <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex flex-col items-center">
-          <i class="fas fa-book mb-1"></i>
-          <span class="text-xs">Mes cours</span>
-        </a>
-        <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex flex-col items-center">
-          <i class="fas fa-plus-circle mb-1"></i>
-          <span class="text-xs">Rejoindre</span>
-        </a>
-        <a href="#" class="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 flex flex-col items-center">
-          <i class="fas fa-info-circle mb-1"></i>
-          <span class="text-xs">À propos</span>
-        </a>
-      </div>
-    </div>
-  </header>
+  </nav>
+
+  <!-- Menu mobile -->
+  <div class="peer-checked:flex hidden flex-col md:hidden px-4 pb-4 text-gray-700 dark:text-gray-200 space-y-2 font-medium">
+    <a href="{{ route('Acceuil') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+      <i class="fas fa-home mr-2"></i> Accueil
+    </a>
+    <a href="{{route('cours.mescours')}}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+      <i class="fas fa-book mr-2"></i> Mes cours
+    </a>
+    <a href="{{ route('cours.rejoindreshow') }}" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+      <i class="fas fa-plus-circle mr-2"></i> Rejoindre un cours
+    </a>
+    <a href="#" class="hover:text-blue-600 dark:hover:text-blue-400 flex items-center">
+      <i class="fas fa-info-circle mr-2"></i> À propos
+    </a>
+  </div>
 
   <script>
     // Vérifie le mode au chargement
@@ -106,31 +95,46 @@
       }
       updateDarkModeIcon();
     }
-    
+
     // Bascule entre dark/light
     function toggleDarkMode() {
       const isDark = document.documentElement.classList.toggle('dark');
       localStorage.setItem('darkMode', isDark);
       updateDarkModeIcon();
     }
-    
+
     // Met à jour l'icône
     function updateDarkModeIcon() {
       const isDark = document.documentElement.classList.contains('dark');
       document.getElementById('sun-icon').classList.toggle('hidden', isDark);
       document.getElementById('moon-icon').classList.toggle('hidden', !isDark);
     }
-    
+
     // Écoute les changements de préférence système
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
       if (!localStorage.getItem('darkMode')) {
         checkDarkMode();
       }
     });
-    
+
     // Initialisation
     document.addEventListener('DOMContentLoaded', checkDarkMode);
+
+    // Affichage du dropdown
+    const dropdownButton = document.querySelector('.relative > button');
+    const dropdownMenu = document.querySelector('.relative > div');
+
+    dropdownButton.addEventListener('click', () => {
+      dropdownMenu.classList.toggle('hidden');
+    });
+
+    // Cacher le menu si l'utilisateur clique en dehors
+    window.addEventListener('click', (e) => {
+      if (!dropdownButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
+        dropdownMenu.classList.add('hidden');
+      }
+    });
   </script>
-  
-  <!-- AlpineJS pour les menus déroulants -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+</body>
+</html>

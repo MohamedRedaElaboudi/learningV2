@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Contracts\Auth\Authenticatable;
 
-class Personne extends Model implements Authenticatable
+class Personne extends Authenticatable
 {
     use HasFactory;
 
-    protected $table = 'personnes';
-
-    protected $primaryKey = 'id_personne';
+    protected $primaryKey = 'id_personne'; 
+    public $incrementing = true; 
+    protected $keyType = 'string';
+    public $timestamps = false;
 
     protected $fillable = [
         'nom',
@@ -23,5 +23,6 @@ class Personne extends Model implements Authenticatable
 
     protected $hidden = [
         'password',
+        'remember_token',
     ];
 }

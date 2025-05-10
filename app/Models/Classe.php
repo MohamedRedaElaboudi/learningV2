@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Classe extends Model
+class classe extends Model
 {
     use HasFactory;
 
@@ -19,16 +19,17 @@ class Classe extends Model
     protected $fillable = [
         'classe_nom',
         'code_classe',
+        'id_prof',
     ];
 
     // Désactiver les timestamps si la table ne les utilise pas
-    public $timestamps = true;
+    public $timestamps = false;
 
 
-    public function etudiants()
-{
-    return $this->belongsToMany(Etudiant::class, 'inscrire', 'id_classe', 'id_personne')
-                ->withPivot('date_inscription');
-}
+    public function professeur()
+    {
+        return $this->belongsTo(Professeur::class, 'id_prof');
+    }
+
 
 }

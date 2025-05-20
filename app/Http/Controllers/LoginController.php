@@ -43,8 +43,12 @@ class LoginController extends Controller
             }
         } else {
             // Si ce n'est pas un professeur, c'est un étudiant
-            session(['role' => 'etudiant']);
+            session(['role' => 'etudiant']); 
+            return redirect()->route('cours.mescours');       
+
+            
         }
+
 
         return redirect()->intended(); // Pas de redirection explicite vers un dashboard
     }
@@ -67,9 +71,7 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         // Regénérer le token CSRF pour éviter les attaques CSRF
-        $request->session()->regenerateToken();
-
-        // Rediriger l'utilisateur vers la page de connexion
+     // Rediriger l'utilisateur vers la page de connexion
         return redirect('/login');
     }
 }

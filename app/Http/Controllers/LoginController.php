@@ -32,8 +32,18 @@ class LoginController extends Controller
             // Authentifier l'utilisateur en utilisant son ID, sans implémenter l'interface Authenticatable
             Auth::loginUsingId($user->id_personne);
 
-            // Rediriger vers la page des cours ou la page demandée
-            return redirect()->route('cours.mescours');        }
+            
+            $isProfesseur = \DB::table('professeurs')->where('id-personne', $user->id_personne)->exists();
+            
+            
+            $isEtudiant = \DB::table('etudiants')->where('id-personne', $user->id_personne)->exists();
+            
+            
+            if ($isProfesseur) {
+                return redirect()->route('professeur.dashboard');
+            } elseif ($isEtudiant) {
+                return redirect()->route('cours.mescours');
+                    }}
 
         // Si l'email ou le mot de passe est incorrect
         return back()->withErrors([

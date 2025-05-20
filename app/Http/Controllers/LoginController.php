@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Personne;
-use App\Models\Professeur;
-
 
 class LoginController extends Controller
 {
@@ -19,47 +17,39 @@ class LoginController extends Controller
 
     // Gère la connexion de l'utilisateur
     public function login(Request $request)
-{
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required',
-    ]);
+    {
+        // Validation des données du formulaire de connexion
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-    $user = Personne::where('email', $request->email)->first();
+        // Tentative d'authentification avec email et mot de passe
+        $user = Personne::where('email', $request->email)->first();
 
-    if ($user && Hash::check($request->password, $user->password)) {
-        Auth::loginUsingId($user->id_personne);
-
-        // Vérifie s'il est dans la table professeur
-        $prof = Professeur::where('id_personne', $user->id_personne)->first();
-
-        if ($prof) {
-            if (is_null($prof->id_admin)) {
-                // L'utilisateur est un admin
-                session(['role' => 'admin']);
-            } else {
-                // L'utilisateur est un professeur
-                session(['role' => 'professeur']);
-            }
-        } else {
-            // Si ce n'est pas un professeur, c'est un étudiant
-            session(['role' => 'etudiant']); 
-            return redirect()->route('cours.mescours');       
+        // Vérification si l'utilisateur existe et si le mot de passe est correct
+        if ($user && Hash::check($request->password, $user->password)) {
+            // Authentifier l'utilisateur en utilisant son ID, sans implémenter l'interface Authenticatable
+            Auth::loginUsingId($user->id_personne);
 
             
-        }
+            $isProfesseur = \DB::table('professeurs')->where('id-personne', $user->id_personne)->exists();
+            
+            
+            $isEtudiant = \DB::table('etudiants')->where('id-personne', $user->id_personne)->exists();
+            
+            
+            if ($isProfesseur) {
+                return redirect()->route('professeur.dashboard');
+            } elseif ($isEtudiant) {
+                return redirect()->route('cours.mescours');
+                    }}
 
-
-        return redirect()->intended(); // Pas de redirection explicite vers un dashboard
+        // Si l'email ou le mot de passe est incorrect
+        return back()->withErrors([
+            'email' => 'Email ou mot de passe incorrect.',
+        ])->withInput();
     }
-
-    // Cas où l'utilisateur est un invité ou les identifiants sont invalides
-    session(['role' => 'guest']); // Facultatif ici, tu peux aussi ne rien mettre
-
-    return back()->withErrors([
-        'email' => 'Email ou mot de passe incorrect.',
-    ])->withInput();
-}
 
     // Gère la déconnexion de l'utilisateur
     public function logout(Request $request)
@@ -70,8 +60,9 @@ class LoginController extends Controller
         // Invalider la session pour améliorer la sécurité
         $request->session()->invalidate();
 
-        // Regénérer le token CSRF pour éviter les attaques CSRF
-     // Rediriger l'utilisateur vers la page de connexion
+        $request->session()->regenerateToken();
+
+        // Rediriger l'utilisateur vers la page de connexion
         return redirect('/login');
     }
 }

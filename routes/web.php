@@ -33,3 +33,6 @@ Route::post('/rejoindre', [CoursController::class, 'rejoindre'])->name('cours.re
 
 // Cours : voir les classes inscrites
 Route::get('/mescours', [CoursController::class, 'mesCoursInscrits'])->name('cours.mescours');
+Route::get('/mesres', function () {
+    return view('login.listResources');
+});

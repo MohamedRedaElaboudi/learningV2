@@ -50,7 +50,6 @@ class LoginController extends Controller
         // Invalider la session pour améliorer la sécurité
         $request->session()->invalidate();
 
-        // Regénérer le token CSRF pour éviter les attaques CSRF
         $request->session()->regenerateToken();
 
         // Rediriger l'utilisateur vers la page de connexion

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Personne;
+use App\Models\Professeur;
+
 
 class LoginController extends Controller
 {
@@ -17,29 +19,43 @@ class LoginController extends Controller
 
     // Gère la connexion de l'utilisateur
     public function login(Request $request)
-    {
-        // Validation des données du formulaire de connexion
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
 
-        // Tentative d'authentification avec email et mot de passe
-        $user = Personne::where('email', $request->email)->first();
+    $user = Personne::where('email', $request->email)->first();
 
-        // Vérification si l'utilisateur existe et si le mot de passe est correct
-        if ($user && Hash::check($request->password, $user->password)) {
-            // Authentifier l'utilisateur en utilisant son ID, sans implémenter l'interface Authenticatable
-            Auth::loginUsingId($user->id_personne);
+    if ($user && Hash::check($request->password, $user->password)) {
+        Auth::loginUsingId($user->id_personne);
 
-            // Rediriger vers la page des cours ou la page demandée
-            return redirect()->route('cours.mescours');        }
+        // Vérifie s'il est dans la table professeur
+        $prof = Professeur::where('id_personne', $user->id_personne)->first();
 
-        // Si l'email ou le mot de passe est incorrect
-        return back()->withErrors([
-            'email' => 'Email ou mot de passe incorrect.',
-        ])->withInput();
+        if ($prof) {
+            if (is_null($prof->id_admin)) {
+                // L'utilisateur est un admin
+                session(['role' => 'admin']);
+            } else {
+                // L'utilisateur est un professeur
+                session(['role' => 'professeur']);
+            }
+        } else {
+            // Si ce n'est pas un professeur, c'est un étudiant
+            session(['role' => 'etudiant']);
+        }
+
+        return redirect()->intended(); // Pas de redirection explicite vers un dashboard
     }
+
+    // Cas où l'utilisateur est un invité ou les identifiants sont invalides
+    session(['role' => 'guest']); // Facultatif ici, tu peux aussi ne rien mettre
+
+    return back()->withErrors([
+        'email' => 'Email ou mot de passe incorrect.',
+    ])->withInput();
+}
 
     // Gère la déconnexion de l'utilisateur
     public function logout(Request $request)

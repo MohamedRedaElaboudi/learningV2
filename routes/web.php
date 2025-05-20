@@ -33,3 +33,27 @@ Route::post('/rejoindre', [CoursController::class, 'rejoindre'])->name('cours.re
 
 // Cours : voir les classes inscrites
 Route::get('/mescours', [CoursController::class, 'mesCoursInscrits'])->name('cours.mescours');
+
+Route::get('/dashprofesseur', function () {
+    return view('professeur.dashprofesseur');  
+});
+
+Route::get('/ressourcesv', function () {
+    return view('professeur.ressourcesv');  
+});
+
+Route::get('/classesv', function () {
+    return view('professeur.classesv');  
+});
+
+Route::get('/parametre', function () {
+    return view('professeur.parametre');  
+});
+
+Route::get('/tableau-de-bord', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/classes', [ClassesController::class, 'index'])->name('classes');
+Route::get('/ressources', [ResourcesController::class, 'index'])->name('ressources');
+Route::get('/questions', [QuestionsController::class, 'index'])->name('questions');
+Route::get('/parametres', [SettingsController::class, 'index'])->name('parametres');
+
+ 

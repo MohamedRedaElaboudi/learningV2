@@ -33,11 +33,10 @@ Route::post('/rejoindre', [CoursController::class, 'rejoindre'])->name('cours.re
 
 // Cours : voir les classes inscrites
 Route::get('/mescours', [CoursController::class, 'mesCoursInscrits'])->name('cours.mescours');
-<<<<<<< HEAD
 Route::get('/mesres', function () {
     return view('login.listResources');
 });
-=======
+
 
 Route::get('/dashprofesseur', function () {
     return view('professeur.dashprofesseur');  
@@ -60,6 +59,3 @@ Route::get('/classes', [ClassesController::class, 'index'])->name('classes');
 Route::get('/ressources', [ResourcesController::class, 'index'])->name('ressources');
 Route::get('/questions', [QuestionsController::class, 'index'])->name('questions');
 Route::get('/parametres', [SettingsController::class, 'index'])->name('parametres');
-
- 
->>>>>>> 33721b4ffb75774b225caf637439cfec89e3a141

@@ -37,13 +37,14 @@ class LoginController extends Controller
             session(['role' => 'professeur']);
             session(['id_prof' => $prof->id_prof]);
 
+
             // Vérifier s'il est également admin
             if (!is_null($prof->id_admin)) {
                 session(['role' => 'admin']);
                 session(['id_admin' => $prof->id_admin]);
             }
 
-            return redirect()->intended(); // Redirection selon le rôle ou vers une page générique
+            return redirect()->route('dashboardprof');
         } else {
             // Étudiant
             session(['role' => 'etudiant']);

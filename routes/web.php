@@ -39,8 +39,8 @@ Route::get('/mesres', function () {
 
 
 Route::get('/dashprofesseur', function () {
-    return view('professeur.dashprofesseur');  
-});
+    return view('professeur.dashprofesseur');
+})->name('dashboardprof');
 
 Route::get('/ressourcesv', function () {
     return view('professeur.ressourcesv');  
